@@ -1,0 +1,1134 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Valgrind - RCC User Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="None" data-md-color-accent="None">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#valgrind" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="RCC User Guide" class="md-header__button md-logo" aria-label="RCC User Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RCC User Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Valgrind
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="RCC User Guide" class="md-nav__button md-logo" aria-label="RCC User Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    RCC User Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://rcc.uchicago.edu/accounts-allocations" class="md-nav__link">
+        Accounts and Allocations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Midway2 and Midway3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Midway2 and Midway3" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Midway2 and Midway3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway_getting_started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway_hardware_overview/" class="md-nav__link">
+        Hardware Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway_connecting/" class="md-nav__link">
+        Connecting to Midway
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_4">
+          Data Management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Management" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Data Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway_data_transfer/" class="md-nav__link">
+        Data Transfer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway_data_storage/" class="md-nav__link">
+        Data Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway_file_permissions/" class="md-nav__link">
+        File System Permissions
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5" type="checkbox" id="__nav_3_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_5">
+          Running Jobs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Running Jobs" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_5">
+          <span class="md-nav__icon md-icon"></span>
+          Running Jobs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway_jobs_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway_submitting_jobs/" class="md-nav__link">
+        Submitting Jobs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway_job_management/" class="md-nav__link">
+        Managing Jobs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/example_job_scripts/" class="md-nav__link">
+        Example Job Submission Scripts
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" type="checkbox" id="__nav_3_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_6">
+          Software
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Software" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_6">
+          <span class="md-nav__icon md-icon"></span>
+          Software
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../midway_software_overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6_2" type="checkbox" id="__nav_3_6_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_6_2">
+          Commonly Used Applications
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Commonly Used Applications" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Commonly Used Applications
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway3_python.md" class="md-nav__link">
+        Python and Conda
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway3_jupyter.md" class="md-nav__link">
+        Jupyter
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway3_tf_pytorch.md" class="md-nav__link">
+        Tensorflow and PyTorch
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway3_software_list.md" class="md-nav__link">
+        List of All Software
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway3_software_requests.md" class="md-nav__link">
+        Request New Software
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../midway_troubleshooting/" class="md-nav__link">
+        Troubleshooting and FAQ
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Specialized Systems and Partitions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Specialized Systems and Partitions" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Specialized Systems and Partitions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://sde-midwayr.rcc.uchicago.edu/user-guide/" class="md-nav__link">
+        MidwayR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://dali.uchicago.edu/using-dali/" class="md-nav__link">
+        Beagle3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://dali.uchicago.edu/using-dali/" class="md-nav__link">
+        DaLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://midwayssd.rcc.uchicago.edu/using-midwayssd/" class="md-nav__link">
+        MidwaySSD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://dali.uchicago.edu/using-dali/" class="md-nav__link">
+        Skyway
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../user_policy/" class="md-nav__link">
+        RCC User Policy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Help
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Help" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Help
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../general_faq/" class="md-nav__link">
+        Frequently Asked Questions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contact_us.md" class="md-nav__link">
+        Contact Us
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memcheck" class="md-nav__link">
+    Memcheck
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cachegrind" class="md-nav__link">
+    Cachegrind
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#helgrind" class="md-nav__link">
+    Helgrind
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="valgrind">Valgrind</h1>
+<p>Valgrind is an open source set of debugging and profiling tools.  It is
+most commonly used to locate memory errors, including leaks, but also can
+be used to debug threaded codes and profile cache efficiency.</p>
+<p>See the <a href="http://valgrind.org/docs/manual/">Valgrind Online Documentation</a>
+for more information.</p>
+<h2 id="usage">Usage</h2>
+<p>The following snippet shows how to load the valgrind module and use it to
+perform analysis on a c code.</p>
+<div class="highlight"><pre><span></span><code>module load valgrind
+gcc -g source.c
+valgrind --tool<span class="o">=[</span>memcheck,cachgrind,helgrind<span class="o">]</span> ./a.out
+</code></pre></div>
+<p>If no tool is specified, valgrind will default to the memory checker.</p>
+<h3 id="memcheck">Memcheck</h3>
+<p>Memcheck is a tool to detect a wide range of memory errors including buffer over-runs,
+memory leaks and double-freeing of heap blocks, and uninitialized variables.</p>
+<p>Download <code>memleak.c</code>: for a simple example of using the cachegrind module to
+identify a memory leak:</p>
+<div class="highlight"><pre><span></span><code>$ module load valgrind
+$ gcc -g memleak.c
+$ valgrind --tool=memcheck ./a.out
+==3153== Memcheck, a memory error detector
+==3153== Copyright (C) 2002-2012, and GNU GPL&#39;d, by Julian Seward et al.
+==3153== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==3153== Command: ./a.out
+==3153==
+==3153==
+==3153== HEAP SUMMARY:
+==3153==     in use at exit: 800 bytes in 10 blocks
+==3153==   total heap usage: 10 allocs, 0 frees, 800 bytes allocated
+==3153==
+==3153== LEAK SUMMARY:
+==3153==    definitely lost: 800 bytes in 10 blocks
+==3153==    indirectly lost: 0 bytes in 0 blocks
+==3153==      possibly lost: 0 bytes in 0 blocks
+==3153==    still reachable: 0 bytes in 0 blocks
+==3153==         suppressed: 0 bytes in 0 blocks
+==3153== Rerun with --leak-check=full to see details of leaked memory
+==3153==
+==3153== For counts of detected and suppressed errors, rerun with: -v
+==3153== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+</code></pre></div>
+<p>Running memcheck without any options identifies that 800 bytes were not
+freed at the time the program terminated, and those were allocated in 10
+distinct blocks.  To get a better idea of where those blocks were allocated,
+use the option <code>--leak-check=full</code>:</p>
+<div class="highlight"><pre><span></span><code>$ valgrind --tool=memcheck --leak-check=full ./a.out
+==3154== Memcheck, a memory error detector
+==3154== Copyright (C) 2002-2012, and GNU GPL&#39;d, by Julian Seward et al.
+==3154== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==3154== Command: ./a.out
+==3154==
+==3154==
+==3154== HEAP SUMMARY:
+==3154==     in use at exit: 800 bytes in 10 blocks
+==3154==   total heap usage: 10 allocs, 0 frees, 800 bytes allocated
+==3154==
+==3154== 800 bytes in 10 blocks are definitely lost in loss record 1 of 1
+==3154==    at 0x4C278FE: malloc (vg_replace_malloc.c:270)
+==3154==    by 0x400575: main (memleak.c:i24)
+==3154==
+==3154== LEAK SUMMARY:
+==3154==    definitely lost: 800 bytes in 10 blocks
+==3154==    indirectly lost: 0 bytes in 0 blocks
+==3154==      possibly lost: 0 bytes in 0 blocks
+==3154==    still reachable: 0 bytes in 0 blocks
+==3154==         suppressed: 0 bytes in 0 blocks
+==3154==
+==3154== For counts of detected and suppressed errors, rerun with: -v
+==3154== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 6 from 6)
+</code></pre></div>
+<p>Now memcheck has identified that the 10 code blocks were allocated at memleak.c
+line 10, and the user can modify the code to free those allocations at the
+appropriate place.</p>
+<h3 id="cachegrind">Cachegrind</h3>
+<p>Cachegrind is a Valgrind tool that simulates (rather than measures) how a code interact with
+the multi-level caches found in modern computer architectures.  It is very useful for identifying
+cache misses as a performance problem, as well as identifying parts of the code responsible.
+Cachegrind does have several limitations, and can dramatically increase the time it takes to
+execute a code.  See the <a href="http://valgrind.org/docs/manual/cg-manual.html">cachgrind manual</a>
+for full details.</p>
+<p>Download <code>matrixmult.c</code> for a simple example using the cachegrind module to estimate
+cache efficiency:</p>
+<div class="highlight"><pre><span></span><code>$ module load valgrind
+$ gcc -g matrixmult.c
+$ valgrind --tool=cachegrind ./a.out
+==2548== Cachegrind, a cache and branch-prediction profiler
+==2548== Copyright (C) 2002-2012, and GNU GPL&#39;d, by Nicholas Nethercote et al.
+==2548== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==2548== Command: ./a.out
+==2548==
+--2548-- warning: L3 cache found, using its data for the LL simulation.
+==2548==
+==2548== I   refs:      3,252,178,387
+==2548== I1  misses:              745
+==2548== LLi misses:              738
+==2548== I1  miss rate:          0.00%
+==2548== LLi miss rate:          0.00%
+==2548==
+==2548== D   refs:      1,082,643,679  (720,139,382 rd   + 362,504,297 wr)
+==2548== D1  misses:      406,465,246  (405,103,433 rd   +   1,361,813 wr)
+==2548== LLd misses:          313,706  (      1,950 rd   +     311,756 wr)
+==2548== D1  miss rate:          37.5% (       56.2%     +         0.3%  )
+==2548== LLd miss rate:           0.0% (        0.0%     +         0.0%  )
+==2548==
+==2548== LL refs:         406,465,991  (405,104,178 rd   +   1,361,813 wr)
+==2548== LL misses:           314,444  (      2,688 rd   +     311,756 wr)
+==2548== LL miss rate:            0.0% (        0.0%     +         0.0%  )
+</code></pre></div>
+<p>The above output shows that the example code has a greater than 50% read cache miss rate,
+which will significantly degrade performance.  Since the code was compiled with the
+<code>-g</code> compiler flag, the cg_annotate tool can be used to parse cachgrind output
+and produce a line-by-line annotated report:</p>
+<div class="highlight"><pre><span></span><code>$ cg_annotate --auto=yes cachegrind.out.2548
+--------------------------------------------------------------------------------
+I1 cache:         32768 B, 64 B, 8-way associative
+D1 cache:         32768 B, 64 B, 8-way associative
+LL cache:         20971520 B, 64 B, 20-way associative
+Command:          ./a.out
+Data file:        cachegrind.out.2548
+Events recorded:  Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Events shown:     Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Event sort order: Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Thresholds:       0.1 100 100 100 100 100 100 100 100
+Include dirs:
+User annotated:
+Auto-annotation:  on
+
+--------------------------------------------------------------------------------
+           Ir I1mr ILmr          Dr        D1mr  DLmr          Dw      D1mw    DLmw
+--------------------------------------------------------------------------------
+3,252,178,387  745  738 720,139,382 405,103,433 1,950 362,504,297 1,361,813 311,756  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+           Ir I1mr ILmr          Dr        D1mr DLmr          Dw      D1mw    DLmw  file:function
+--------------------------------------------------------------------------------
+3,251,974,540    6    6 720,090,005 405,100,952    0 362,490,010 1,361,251 311,250  /home/drudd/debug/matrixmult.c:main
+
+--------------------------------------------------------------------------------
+-- Auto-annotated source: /home/drudd/debug/matrixmult.c
+--------------------------------------------------------------------------------
+           Ir I1mr ILmr          Dr        D1mr DLmr          Dw      D1mw    DLmw
+
+-- line 12 ----------------------------------------
+            .    .    .           .           .    .           .         .       .   *******************************************************************/
+            .    .    .           .           .    .           .         .       .  #include &lt;stdlib.h&gt;
+            .    .    .           .           .    .           .         .       .  #include &lt;stdio.h&gt;
+            .    .    .           .           .    .           .         .       .  #include &lt;math.h&gt;
+            .    .    .           .           .    .           .         .       .
+            .    .    .           .           .    .           .         .       .  #define N 300
+            .    .    .           .           .    .           .         .       .  #define M 4000
+            .    .    .           .           .    .           .         .       .
+          909    0    0           0           0    0           3         0       0  int main( int argc, char *argv[] ) {
+            .    .    .           .           .    .           .         .       .      int i, j, k;
+            .    .    .           .           .    .           .         .       .      double *A, *B, *C;
+            .    .    .           .           .    .           .         .       .      double tmp;
+            .    .    .           .           .    .           .         .       .
+            3    1    1           0           0    0           1         0       0      A = (double *)malloc(N*M*sizeof(double));
+            3    0    0           0           0    0           1         0       0      B = (double *)malloc(N*M*sizeof(double));
+            2    0    0           0           0    0           1         0       0      C = (double *)malloc(N*N*sizeof(double));
+            .    .    .           .           .    .           .         .       .
+            7    1    1           0           0    0           0         0       0      if ( A == NULL || B == NULL || C == NULL ) {
+            .    .    .           .           .    .           .         .       .          fprintf(stderr,&quot;Error allocating memory!\n&quot;);
+            .    .    .           .           .    .           .         .       .          exit(1);
+            .    .    .           .           .    .           .         .       .      }
+            .    .    .           .           .    .           .         .       .
+            .    .    .           .           .    .           .         .       .      /* initialize A &amp; B */
+        1,801    0    0           0           0    0           0         0       0      for ( i = 0; i &lt; N; i++ ) {
+    6,000,600    1    1           0           0    0           0         0       0          for ( j = 0; j &lt; M; j++ ) {
+    2,400,000    0    0           0           0    0   1,200,000   150,000 150,000              A[M*i+j] = 3.0;
+    2,400,000    0    0           0           0    0   1,200,000 1,199,999 150,000              B[N*j+i] = 2.0;
+            .    .    .           .           .    .           .         .       .          }
+            .    .    .           .           .    .           .         .       .      }
+            .    .    .           .           .    .           .         .       .
+      180,001    0    0           0           0    0           0         0       0      for ( i = 0; i &lt; N*N; i++ ) {
+      180,000    0    0           0           0    0      90,000    11,251  11,250          C[i] = 0.0;
+            .    .    .           .           .    .           .         .       .      }
+            .    .    .           .           .    .           .         .       .
+          600    0    0           0           0    0           0         0       0      for ( i = 0; i &lt; N; i++ ) {
+      630,600    2    2      90,000      11,251    0           0         0       0          for ( j = 0; j &lt; N; j++ ) {
+1,800,180,000    0    0           0           0    0           0         0       0              for ( k = 0; k &lt; M; k++ ) {
+1,440,000,000    0    0 720,000,000 405,089,701    0 360,000,000         0       0                  C[N*i+j] += A[M*i+k]*B[N*k+j];
+            .    .    .           .           .    .           .         .       .              }
+            .    .    .           .           .    .           .         .       .          }
+            .    .    .           .           .    .           .         .       .      }
+            .    .    .           .           .    .           .         .       .
+            3    0    0           0           0    0           2         1       0      free(A);
+            2    0    0           0           0    0           1         0       0      free(B);
+            3    0    0           1           0    0           1         0       0      free(C);
+            .    .    .           .           .    .           .         .       .
+            .    .    .           .           .    .           .         .       .      return 0;
+            6    1    1           4           0    0           0         0       0  }
+
+--------------------------------------------------------------------------------
+ Ir I1mr ILmr  Dr D1mr DLmr  Dw D1mw DLmw
+--------------------------------------------------------------------------------
+100    1    1 100  100    0 100  100  100  percentage of events annotated
+</code></pre></div>
+<p>Note that in this example the loop order causes very poor cache performance for the innermost line of the nested loop.  Exchanging
+the k and j indexed loops will give significantly better performance.  Still better performance can be obtained through blocking,
+or, as this is a standard linear algebra opperation, using LAPACK or the Intel Math Kernel Library, which has tuned routines for
+performing such calculations.</p>
+<h3 id="helgrind">Helgrind</h3>
+<p>Helgrind is a thread error checking tool.  Unfortunately it has poor interaction with gcc’s OpenMP implementation, and can lead
+to a large number of distracting messages.  Still, it can be useful in identifying races or unprotected critical sections within
+shared memory parallel code.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+    
+  </body>
+</html>
